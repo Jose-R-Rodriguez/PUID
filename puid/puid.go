@@ -7,7 +7,8 @@ import (
 	"os"
 	"strings"
 	"time"
-	"utils"
+
+	"github.com/Jose-R-Rodriguez/PUID/utils"
 )
 
 /*
