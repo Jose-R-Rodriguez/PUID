@@ -2,9 +2,10 @@ package puid_test
 
 import (
 	"fmt"
-	"puid"
 	"regexp"
 	"testing"
+
+	"github.com/Jose-R-Rodriguez/PUID/puid"
 )
 
 func TestPUIDString(t *testing.T) {
