@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"github.com/Jose-R-Rodriguez/WDIO_CommandLineUtility/utils"
+	"github.com/Jose-R-Rodriguez/PUID/utils"
 )
 
 // Code and idea by Andrew Gerrand https://talks.golang.org/2014/testing.slide#23
