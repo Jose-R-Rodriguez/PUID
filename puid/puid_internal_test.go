@@ -1,6 +1,10 @@
 package puid
 
 import (
+	"fmt"
+	"path/filepath"
+	"reflect"
+	"runtime"
 	"testing"
 )
 
@@ -41,14 +45,21 @@ var testUUID = []struct {
 	{0x00000000FFFFFFFF, 0x00000000FFFFFFFF, 0x0000AABB, [12]byte{0xFF, 0xFF, 0xFF, 0xFF, 0x4A, 0x52, 0xAA, 0xBB, 0xFF, 0xFF, 0xFF, 0xFF}},
 }
 
+// Equals fails the test if exp is not equal to act.
+func equals(tb testing.TB, exp, act interface{}) {
+	if !reflect.DeepEqual(exp, act) {
+		_, file, line, _ := runtime.Caller(1)
+		fmt.Printf("\033[31m%s:%d:\n\n\texp: %#v\n\n\tgot: %#v\033[39m\n\n", filepath.Base(file), line, exp, act)
+		tb.FailNow()
+	}
+}
+
 func TestGeneratePUID(t *testing.T) {
 	//puid := generatePUID(time.Now().Unix(), time.Now().UnixNano(), uint32(os.Getpid()))
 	for _, test := range testUUID {
 		puid := generatePUID(test.iUnixTime, test.iUnixnsTtime, test.iProcessID)
 		for i, expected := range test.num {
-			if puid.number[i] != expected {
-				t.Errorf("Incorrect PUID %x != %x on index: %d", puid.number[i], expected, i)
-			}
+			equals(t, puid.number[i], expected)
 		}
 	}
 }

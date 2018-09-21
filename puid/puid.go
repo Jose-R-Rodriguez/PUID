@@ -3,12 +3,11 @@ package puid
 import (
 	"bytes"
 	"encoding/base32"
+	"log"
 	"math/rand"
 	"os"
 	"strings"
 	"time"
-
-	"github.com/Jose-R-Rodriguez/PUID/utils"
 )
 
 /*
@@ -22,7 +21,9 @@ func (id *PUID) String() string {
 	encoded := new(bytes.Buffer)
 	encoder := base32.NewEncoder(base32.HexEncoding, encoded)
 	_, err := encoder.Write(id.number[:])
-	utils.Log(err, "Error in conversion from PUID to base32 string")
+	if err != nil {
+		log.Fatalf("Error in conversion from PUID to base32 string")
+	}
 	defer encoder.Close()
 	return strings.TrimRight(encoded.String(), "=")
 }
